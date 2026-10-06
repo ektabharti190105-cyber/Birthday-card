@@ -1,103 +1,535 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Little Birthday Surprise 💗</title>
+<title>For My Nepalan 💗</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Georgia,serif;text-align:center;color:#713b50;background:linear-gradient(135deg,#fff0f5,#ffe0e9,#fff7ed);min-height:100vh}
-main{max-width:700px;margin:auto;padding:28px 18px}
-.card{background:#ffffffd9;border-radius:25px;padding:28px 18px;margin:22px auto;box-shadow:0 8px 30px #b65c7720}
-h1{font-size:clamp(32px,7vw,54px);color:#d44d7c}
-h2{color:#bd5279}
-p{font-size:18px;line-height:1.7}
-button{border:0;border-radius:30px;padding:13px 23px;background:#d95783;color:white;font-size:16px;cursor:pointer;margin:8px}
-button:hover{background:#b83d68}
-.hidden{display:none}
-.heart{font-size:42px;animation:pulse 1s infinite alternate}
-@keyframes pulse{to{transform:scale(1.2)}}
-.photo{width:100%;max-width:450px;border-radius:18px;margin:12px auto;display:block}
-input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #e9a9bd;border-radius:12px;font:16px Arial}
-footer{padding:25px;font-size:14px}
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Georgia,serif;
+  background:linear-gradient(135deg,#160b18,#3a1428,#1b1020);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+}
+
+.card{
+  width:min(700px,95%);
+  min-height:650px;
+  padding:35px 25px;
+  border-radius:30px;
+  text-align:center;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  display:none;
+  animation:appear .8s ease;
+}
+
+.card.active{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+@keyframes appear{
+  from{opacity:0;transform:translateY(25px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+h1{
+  font-size:clamp(38px,8vw,65px);
+  margin:15px 0;
+  color:#ffd5e5;
+}
+
+h2{
+  font-size:32px;
+  color:#ffc1d9;
+}
+
+p{
+  font-size:19px;
+  line-height:1.8;
+  max-width:570px;
+}
+
+.small{
+  font-size:15px;
+  opacity:.8;
+}
+
+button{
+  border:0;
+  padding:14px 28px;
+  border-radius:30px;
+  background:#ff6f9f;
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+  margin:12px;
+  box-shadow:0 8px 25px rgba(255,105,155,.35);
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+.heart{
+  font-size:55px;
+  animation:pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse{
+  to{transform:scale(1.15)}
+}
+
+.photo{
+  width:min(430px,90%);
+  height:400px;
+  object-fit:cover;
+  border-radius:22px;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+  border:3px solid rgba(255,255,255,.25);
+}
+
+.note{
+  margin:20px auto;
+  padding:15px 20px;
+  border-radius:18px;
+  background:rgba(255,192,215,.12);
+  max-width:500px;
+  font-style:italic;
+}
+
+.letter{
+  text-align:left;
+  padding:10px;
+}
+
+.letter p{
+  font-size:17px;
+}
+
+.signature{
+  font-size:24px;
+  color:#ffc1d9;
+  margin-top:25px;
+}
+
+.dots{
+  margin-top:20px;
+  opacity:.7;
+  font-size:14px;
+}
+
+#musicButton{
+  position:fixed;
+  top:18px;
+  right:18px;
+  z-index:50;
+  padding:10px 15px;
+  font-size:14px;
+  display:none;
+}
+
+.confetti{
+  position:fixed;
+  top:-20px;
+  font-size:22px;
+  animation:fall 4s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+@media(max-width:600px){
+  .card{
+    min-height:600px;
+    padding:25px 18px;
+  }
+
+  .photo{
+    height:350px;
+  }
+
+  p{
+    font-size:17px;
+  }
+}
 </style>
 </head>
+
 <body>
-<main>
-<section class="card" id="welcome">
-<div class="heart">💗 🎂 💗</div>
-<p>A little surprise made just for you...</p>
-<h1>Happy Birthday!</h1>
-<p>Someone very special deserves something special.</p>
-<button onclick="openCard()">🎁 Open Your Surprise</button>
-</section>
 
-<div id="surprise" class="hidden">
-<section class="card">
-<h1>Happiest Birthday! 🥹💕</h1>
-<p>To my favourite person in the whole world...</p>
-<p>Today is all about YOU! ✨</p>
-<div class="heart">💖</div>
-</section>
+<audio id="birthdaySong" loop>
+  <source src="music/tera-deedar-hua.mp3" type="audio/mpeg">
+</audio>
 
-<section class="card">
-<h2>📸 Our Little Memories</h2>
-<p>Every picture holds a little piece of our story.</p>
-<p>We'll add your favourite photos here soon!</p>
-<div id="photos"></div>
-</section>
+<button id="musicButton" onclick="toggleMusic()">🎵 Music</button>
 
-<section class="card">
-<h2>🎵 A Song Just for You</h2>
-<p>Press play and enjoy your special song 💗</p>
-<input type="file" id="songFile" accept="audio/*">
-<audio id="song" controls style="width:100%;margin-top:12px"></audio>
-</section>
 
-<section class="card">
-<h2>🎬 Our Memories in Motion</h2>
-<input type="file" id="videoFile" accept="video/*">
-<video id="video" controls class="photo" style="display:none"></video>
-<p>Little moments, unforgettable memories. 🎀</p>
-</section>
+<!-- OPENING -->
+<section class="page">
+<div class="card active" id="page0">
 
-<section class="card">
-<h2>💌 A Letter From My Heart</h2>
-<p>Dear bestie,</p>
-<p>Some people come into our lives and make everything a little brighter. You are one of those people for me. Thank you for understanding me, listening without judging, and being someone I can be myself around.</p>
-<p>I hope this new year of your life brings you happiness, peace, laughter, and all the beautiful things you deserve. No matter how busy life gets, I hope we always make more memories together.</p>
-<p>Love you always, bestie! 🥹❤️</p>
-</section>
+  <div class="heart">💗</div>
 
-<section class="card">
-<h2>🎀 One Last Thing...</h2>
-<div class="heart">💗 💗 💗</div>
-<h1>You Are Loved!</h1>
-<p>Happy Birthday, my favourite human. Here's to many more memories together! 🥂💕</p>
-<button onclick="celebrate()">🎉 Make a Wish!</button>
-<p id="wish"></p>
-</section>
+  <p class="small">A little something made specially for you...</p>
+
+  <h1>For My Nepalan</h1>
+
+  <p>
+    My Top Name. My Cutiee. My BBG. 🥹
+  </p>
+
+  <button onclick="startCard()">
+    🎁 Open Your Surprise
+  </button>
+
+  <p class="small">Turn your volume up 🎧</p>
+
 </div>
-<footer>Made with love, just for you 💗</footer>
-</main>
+</section>
+
+
+<!-- BIRTHDAY -->
+<section class="page">
+<div class="card" id="page1">
+
+  <div class="heart">🎂💗🎂</div>
+
+  <h1>HAPPY BIRTHDAY</h1>
+
+  <h2>My Nepalan 🥹❤️</h2>
+
+  <p>
+    Today is officially your day,
+    so I made this little corner of the internet
+    just for you.
+  </p>
+
+  <p>
+    Because you deserve more than just a
+    "Happy Birthday" message. 🫶🏻
+  </p>
+
+  <button onclick="nextPage()">Continue →</button>
+
+</div>
+</section>
+
+
+<!-- PHOTO 1 -->
+<section class="page">
+<div class="card" id="page2">
+
+  <p class="small">A little piece of our memories...</p>
+
+  <img src="photos/photo1.jpg" class="photo">
+
+  <h2>My Top Name 💗</h2>
+
+  <div class="note">
+    Some people become memories.
+    You became one of my favourite parts of life. 🥹
+  </div>
+
+  <button onclick="nextPage()">Next memory →</button>
+
+</div>
+</section>
+
+
+<!-- PHOTO 2 -->
+<section class="page">
+<div class="card" id="page3">
+
+  <img src="photos/photo2.jpg" class="photo">
+
+  <h2>My Cutiee 🎀</h2>
+
+  <div class="note">
+    I hope you know how special you are
+    even on the days when you don't feel it yourself. ❤️
+  </div>
+
+  <button onclick="nextPage()">Next memory →</button>
+
+</div>
+</section>
+
+
+<!-- PHOTO 3 -->
+<section class="page">
+<div class="card" id="page4">
+
+  <img src="photos/photo3.jpg" class="photo">
+
+  <h2>My BBG 🫶🏻</h2>
+
+  <div class="note">
+    Thank you for all the random conversations,
+    laughs, memories and those moments
+    that somehow became unforgettable.
+  </div>
+
+  <button onclick="nextPage()">Next memory →</button>
+
+</div>
+</section>
+
+
+<!-- PHOTO 4 -->
+<section class="page">
+<div class="card" id="page5">
+
+  <img src="photos/photo4.jpg" class="photo">
+
+  <h2>Us 🥹</h2>
+
+  <div class="note">
+    Life changes, people grow,
+    but I genuinely hope we keep making
+    silly little memories together. 💗
+  </div>
+
+  <button onclick="nextPage()">Next memory →</button>
+
+</div>
+</section>
+
+
+<!-- PHOTO 5 -->
+<section class="page">
+<div class="card" id="page6">
+
+  <img src="photos/photo5.jpg" class="photo">
+
+  <h2>One More Memory ❤️</h2>
+
+  <div class="note">
+    And if I had to choose my favourite thing
+    about all these pictures...
+    it would simply be that you're in them.
+  </div>
+
+  <button onclick="nextPage()">I have something to say →</button>
+
+</div>
+</section>
+
+
+<!-- LETTER -->
+<section class="page">
+<div class="card" id="page7">
+
+  <div class="heart">💌</div>
+
+  <h2>A Little Letter For You</h2>
+
+  <div class="letter">
+
+    <p>Dear Nepalan,</p>
+
+    <p>
+      I honestly don't know where to start because
+      there are so many things I want to say,
+      and somehow words never feel enough for
+      people who genuinely mean so much.
+    </p>
+
+    <p>
+      You are one of those people who can understand
+      things without me having to explain everything.
+      You listen, you understand, and most importantly,
+      you never make me feel judged for being myself.
+    </p>
+
+    <p>
+      Thank you for every conversation, every laugh,
+      every stupid moment, every little memory,
+      and even those random talks that probably
+      meant nothing at the time but somehow became
+      some of my favourite memories.
+    </p>
+
+    <p>
+      I hope this birthday brings you everything
+      you've been wishing for. I hope you get more
+      reasons to smile, more peaceful days,
+      more adventures and lots and lots of happiness.
+    </p>
+
+    <p>
+      And wherever life takes us,
+      I really hope we continue making memories
+      that one day we'll look back at and say,
+      "Remember when..." 🥹❤️
+    </p>
+
+    <p>
+      Never forget that you are loved,
+      appreciated and genuinely important.
+    </p>
+
+    <p>
+      Happiest Birthday to my Nepalan,
+      my Top Name, my Cutiee, my BBG. 🎂💗
+    </p>
+
+  </div>
+
+  <button onclick="nextPage()">One last thing... →</button>
+
+</div>
+</section>
+
+
+<!-- FINAL -->
+<section class="page">
+<div class="card" id="page8">
+
+  <div class="heart">💗✨💗</div>
+
+  <h1>Thank You</h1>
+
+  <p>
+    Thank you for being you.
+  </p>
+
+  <p>
+    Thank you for understanding me,
+    for being there,
+    and for becoming such a beautiful
+    part of my life.
+  </p>
+
+  <h2>Happy Birthday, Nepalan! 🎂</h2>
+
+  <p>
+    I hope this year is kinder,
+    happier and more beautiful than ever. ❤️
+  </p>
+
+  <div class="signature">
+    With lots of love,<br>
+    Bharti 🫶🏻
+  </div>
+
+  <div class="heart">🥹❤️</div>
+
+</div>
+</section>
+
+
 <script>
-function openCard(){
-document.getElementById('welcome').classList.add('hidden');
-document.getElementById('surprise').classList.remove('hidden');
+
+let currentPage = 0;
+const totalPages = 9;
+
+function showPage(number){
+
+  for(let i=0;i<totalPages;i++){
+    const page=document.getElementById("page"+i);
+
+    if(page){
+      page.classList.remove("active");
+    }
+  }
+
+  const selected=document.getElementById("page"+number);
+
+  if(selected){
+    selected.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
-function celebrate(){
-document.getElementById('wish').textContent='✨ May all your beautiful wishes come true! 🎂💖🎉';
+
+function startCard(){
+
+  currentPage=1;
+  showPage(currentPage);
+
+  const music=document.getElementById("birthdaySong");
+
+  music.play().catch(()=>{});
+
+  document.getElementById("musicButton").style.display="block";
+
+  makeConfetti();
 }
-document.getElementById('songFile').addEventListener('change',function(){
-if(this.files[0])document.getElementById('song').src=URL.createObjectURL(this.files[0]);
-});
-document.getElementById('videoFile').addEventListener('change',function(){
-if(this.files[0]){
-let v=document.getElementById('video');
-v.src=URL.createObjectURL(this.files[0]);v.style.display='block';
+
+function nextPage(){
+
+  if(currentPage < totalPages-1){
+
+    currentPage++;
+
+    showPage(currentPage);
+
+  }
 }
-});
+
+function toggleMusic(){
+
+  const music=document.getElementById("birthdaySong");
+
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+
+function makeConfetti(){
+
+  for(let i=0;i<35;i++){
+
+    const heart=document.createElement("div");
+
+    heart.className="confetti";
+
+    heart.innerHTML=["💗","💕","✨","🌸","🎀"][Math.floor(Math.random()*5)];
+
+    heart.style.left=Math.random()*100+"vw";
+
+    heart.style.animationDelay=Math.random()*2+"s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.remove();
+    },5000);
+  }
+}
+
 </script>
+
 </body>
 </html>
