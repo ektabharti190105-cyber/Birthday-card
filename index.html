@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Birthday Surprise 💗</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,serif;text-align:center;color:#713b50;background:linear-gradient(135deg,#fff0f5,#ffe0e9,#fff7ed);min-height:100vh}
+main{max-width:700px;margin:auto;padding:28px 18px}
+.card{background:#ffffffd9;border-radius:25px;padding:28px 18px;margin:22px auto;box-shadow:0 8px 30px #b65c7720}
+h1{font-size:clamp(32px,7vw,54px);color:#d44d7c}
+h2{color:#bd5279}
+p{font-size:18px;line-height:1.7}
+button{border:0;border-radius:30px;padding:13px 23px;background:#d95783;color:white;font-size:16px;cursor:pointer;margin:8px}
+button:hover{background:#b83d68}
+.hidden{display:none}
+.heart{font-size:42px;animation:pulse 1s infinite alternate}
+@keyframes pulse{to{transform:scale(1.2)}}
+.photo{width:100%;max-width:450px;border-radius:18px;margin:12px auto;display:block}
+input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #e9a9bd;border-radius:12px;font:16px Arial}
+footer{padding:25px;font-size:14px}
+</style>
+</head>
+<body>
+<main>
+<section class="card" id="welcome">
+<div class="heart">💗 🎂 💗</div>
+<p>A little surprise made just for you...</p>
+<h1>Happy Birthday!</h1>
+<p>Someone very special deserves something special.</p>
+<button onclick="openCard()">🎁 Open Your Surprise</button>
+</section>
+
+<div id="surprise" class="hidden">
+<section class="card">
+<h1>Happiest Birthday! 🥹💕</h1>
+<p>To my favourite person in the whole world...</p>
+<p>Today is all about YOU! ✨</p>
+<div class="heart">💖</div>
+</section>
+
+<section class="card">
+<h2>📸 Our Little Memories</h2>
+<p>Every picture holds a little piece of our story.</p>
+<p>We'll add your favourite photos here soon!</p>
+<div id="photos"></div>
+</section>
+
+<section class="card">
+<h2>🎵 A Song Just for You</h2>
+<p>Press play and enjoy your special song 💗</p>
+<input type="file" id="songFile" accept="audio/*">
+<audio id="song" controls style="width:100%;margin-top:12px"></audio>
+</section>
+
+<section class="card">
+<h2>🎬 Our Memories in Motion</h2>
+<input type="file" id="videoFile" accept="video/*">
+<video id="video" controls class="photo" style="display:none"></video>
+<p>Little moments, unforgettable memories. 🎀</p>
+</section>
+
+<section class="card">
+<h2>💌 A Letter From My Heart</h2>
+<p>Dear bestie,</p>
+<p>Some people come into our lives and make everything a little brighter. You are one of those people for me. Thank you for understanding me, listening without judging, and being someone I can be myself around.</p>
+<p>I hope this new year of your life brings you happiness, peace, laughter, and all the beautiful things you deserve. No matter how busy life gets, I hope we always make more memories together.</p>
+<p>Love you always, bestie! 🥹❤️</p>
+</section>
+
+<section class="card">
+<h2>🎀 One Last Thing...</h2>
+<div class="heart">💗 💗 💗</div>
+<h1>You Are Loved!</h1>
+<p>Happy Birthday, my favourite human. Here's to many more memories together! 🥂💕</p>
+<button onclick="celebrate()">🎉 Make a Wish!</button>
+<p id="wish"></p>
+</section>
+</div>
+<footer>Made with love, just for you 💗</footer>
+</main>
+<script>
+function openCard(){
+document.getElementById('welcome').classList.add('hidden');
+document.getElementById('surprise').classList.remove('hidden');
+}
+function celebrate(){
+document.getElementById('wish').textContent='✨ May all your beautiful wishes come true! 🎂💖🎉';
+}
+document.getElementById('songFile').addEventListener('change',function(){
+if(this.files[0])document.getElementById('song').src=URL.createObjectURL(this.files[0]);
+});
+document.getElementById('videoFile').addEventListener('change',function(){
+if(this.files[0]){
+let v=document.getElementById('video');
+v.src=URL.createObjectURL(this.files[0]);v.style.display='block';
+}
+});
+</script>
+</body>
+</html>
